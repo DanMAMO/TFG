@@ -24,14 +24,22 @@ TFG/
 
 ## ⚙️ Cómo usar
 
+### Modo BATCH (varios archivos automáticamente):
+
 1. Colocá archivos `.txt` en `data/galeria_tiro/`
-2. Ejecutá el script principal:
+2. Ejecutá:
 
 ```bash
 python src/main.py
 ```
 
-3. Se generarán `.csv` por cada informe en:
+### Modo MANUAL (archivo único con selector visual):
+
+```bash
+python src/main.py --manual
+```
+
+Se generarán `.csv` por cada informe en:
 
 ```
 outputs/pacientes/{codigo}/{año}/{mes}/
@@ -43,5 +51,6 @@ outputs/pacientes/{codigo}/{año}/{mes}/
 - Genera CSVs automáticamente con nombre único
 - Detecta fecha desde el nombre del archivo
 - Organiza resultados de forma escalable
+- Modo dual: automático o manual
 
 """

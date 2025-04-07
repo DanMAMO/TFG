@@ -1,7 +1,7 @@
 # src/galeria/procesador.py
 import pandas as pd
 import os
-from utils.helpers import extraer_fecha_desde_nombre, guardar_csvs
+from src.utils.helpers import extraer_fecha_desde_nombre, guardar_csvs
 
 def procesar_archivo_galeria(path_txt, root_dir):
     with open(path_txt, "r", encoding="utf-8") as f:

@@ -8,3 +8,6 @@ out
 gen
 # Ignorar todos los resultados generados
 /outputs/
+/data/
+/__pycache__/
+/*.pyc

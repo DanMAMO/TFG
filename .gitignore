@@ -6,3 +6,5 @@
 *.iml
 out
 gen
+# Ignorar todos los resultados generados
+/outputs/

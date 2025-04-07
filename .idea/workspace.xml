@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c4e76e0-2e2a-4f05-8d4f-45fa2f53c27e" name="Changes" comment="Primeros archivos, prueba y pruebas_panda">
-      <change afterPath="$PROJECT_DIR$/src/pruebas/galeria_de_tiro.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/TFG.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TFG.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/galeria/procesar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pruebas/Paciente0.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pruebas/galeria_de_tiro.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pruebas/galeria_de_tiro.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,28 +48,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.prueba_panda.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.galeria_de_tiro.executor": "Run",
+    "Python.procesar.executor": "Run",
+    "Python.prueba_panda (1).executor": "Run",
+    "Python.prueba_panda.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Daniel M.M\PycharmProjects\TFG" />
       <recent name="$PROJECT_DIR$/.venv/bin/pruebas" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.prueba_panda (1)">
+  <component name="RunManager">
     <configuration name="prueba_panda (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TFG" />
       <option name="ENV_FILES" value="" />
@@ -140,7 +146,7 @@
       <workItem from="1742920715633" duration="2647000" />
       <workItem from="1742991111916" duration="368000" />
       <workItem from="1743787910466" duration="1198000" />
-      <workItem from="1744023412295" duration="1086000" />
+      <workItem from="1744023412295" duration="6837000" />
     </task>
     <task id="LOCAL-00001" summary="Primeros archivos, prueba y pruebas_panda">
       <option name="closed" value="true" />
@@ -157,19 +163,9 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="f84ec717-3f8d-49f7-80c5-53943d5844e5" value="TOOL_WINDOW" />
-      </map>
-    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-        <entry key="f84ec717-3f8d-49f7-80c5-53943d5844e5">
           <value>
             <State />
           </value>
@@ -182,6 +178,9 @@
     <option name="LAST_COMMIT_MESSAGE" value="Primeros archivos, prueba y pruebas_panda" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/TFG$prueba_panda__1_.coverage" NAME="prueba_panda (1) Coverage Results" MODIFIED="1744034422501" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/pruebas" />
+    <SUITE FILE_PATH="coverage/TFG$procesar.coverage" NAME="procesar Coverage Results" MODIFIED="1744057416522" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/galeria" />
+    <SUITE FILE_PATH="coverage/TFG$galeria_de_tiro.coverage" NAME="galeria_de_tiro Coverage Results" MODIFIED="1744034830954" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/pruebas" />
     <SUITE FILE_PATH="coverage/TFG$prueba_panda.coverage" NAME="prueba_panda Coverage Results" MODIFIED="1742923625760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.venv/bin" />
   </component>
 </project>

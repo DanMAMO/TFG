@@ -2,7 +2,7 @@
 import os
 import glob
 import sys
-from src.galeria.procesar import procesar_archivo_galeria
+from src.galeria.procesar import InformeGaleria
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(ROOT_DIR, "data", "galeria_tiro")
@@ -20,14 +20,16 @@ if modo_manual:
     print("🟢 Modo MANUAL activado")
     archivo = seleccionar_archivo()
     if archivo:
-        resumen_path, tracking_path = procesar_archivo_galeria(archivo, ROOT_DIR)
+        informe = InformeGaleria(archivo, ROOT_DIR)
+        resumen_path, tracking_path = informe.procesar()
         print(f"✅ Procesado único:\n- {resumen_path}\n- {tracking_path}")
     else:
         print("❌ No se seleccionó ningún archivo.")
 else:
     print("🟡 Modo BATCH: procesando todos los archivos en carpeta")
     informes = glob.glob(os.path.join(DATA_DIR, "*.txt"))
-    for informe in informes:
-        resumen_path, tracking_path = procesar_archivo_galeria(informe, ROOT_DIR)
-        print(f"\n✅ Procesado: {os.path.basename(informe)}")
+    for path in informes:
+        informe = InformeGaleria(path, ROOT_DIR)
+        resumen_path, tracking_path = informe.procesar()
+        print(f"\n✅ Procesado: {os.path.basename(path)}")
         print(f" - Resumen: {resumen_path}\n - Tracking: {tracking_path}")

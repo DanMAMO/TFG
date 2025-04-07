@@ -1,5 +1,3 @@
-# README.md
-"""
 # TFG - Procesamiento de Informes por Juego
 
 Este proyecto procesa informes de tareas cognitivas por paciente y juego, extrayendo datos clave y organizando los resultados automáticamente.
@@ -9,11 +7,13 @@ Este proyecto procesa informes de tareas cognitivas por paciente y juego, extray
 ```
 TFG/
 ├── src/
+│   ├── base/
+│   │   └── informe_base.py       # Clase base abstracta para todos los juegos
 │   ├── galeria/
-│   │   └── procesador.py         # Procesamiento específico para galería de tiro
+│   │   └── procesar.py         # Procesamiento específico para galería de tiro
 │   ├── utils/
 │   │   └── helpers.py            # Funciones comunes: fecha, guardado, nombrado
-│   └── main.py                  # Ejecuta procesamiento en lote
+│   └── main.py                  # Ejecuta procesamiento en lote o manual
 ├── data/
 │   └── galeria_tiro/           # Archivos .txt crudos por paciente
 ├── outputs/
@@ -52,5 +52,4 @@ outputs/pacientes/{codigo}/{año}/{mes}/
 - Detecta fecha desde el nombre del archivo
 - Organiza resultados de forma escalable
 - Modo dual: automático o manual
-
-"""
+- Base abstracta lista para extender a múltiples juegos

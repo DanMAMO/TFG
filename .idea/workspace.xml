@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c4e76e0-2e2a-4f05-8d4f-45fa2f53c27e" name="Changes" comment="Primeros archivos, prueba y pruebas_panda">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/galeria/procesar.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/galeria/procesar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/helpers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +54,7 @@
     "Python.prueba_panda.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "rama__modular",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -143,7 +144,7 @@
       <workItem from="1742920715633" duration="2647000" />
       <workItem from="1742991111916" duration="368000" />
       <workItem from="1743787910466" duration="1198000" />
-      <workItem from="1744023412295" duration="8111000" />
+      <workItem from="1744023412295" duration="8952000" />
     </task>
     <task id="LOCAL-00001" summary="Primeros archivos, prueba y pruebas_panda">
       <option name="closed" value="true" />

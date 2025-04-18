@@ -4,8 +4,7 @@ import os
 
 # === CONFIGURACIÓN ===
 # Ruta al archivo del paciente (puede cambiar por cada uso)
-# archivo_entrada = "../Paciente0.txt"
-# archivo_entrada = "/Users/danielmm/PycharmProjects/TFG/Paciente0.txt"
+# archivo_entrada =
 
 # === CARGAR DATOS JSON ===
 with open(archivo_entrada, "r")  as f:

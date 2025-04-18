@@ -1,8 +1,9 @@
 # src/galeria/procesador.py
 import pandas as pd
 import os
-from utils.helpers import extraer_fecha_desde_nombre, guardar_csvs
-from src.base.informe_base import InformeBase
+from base.informe_base import InformeBase
+from utils.helpers import extraer_fecha_desde_lineas, guardar_csvs
+
 
 class InformeGaleria(InformeBase):
     def procesar(self):
@@ -35,7 +36,7 @@ class InformeGaleria(InformeBase):
         df_tracking = pd.DataFrame([row.split(";") for row in tabla_data], columns=columnas)
 
         nombre_base = os.path.splitext(os.path.basename(self.path_txt))[0]
-        fecha = extraer_fecha_desde_nombre(nombre_base)
+        fecha = extraer_fecha_desde_lineas(lineas, nombre_base)
         codigo = df_resumen.at[0, "codigo"]
 
         return guardar_csvs(df_resumen, df_tracking, codigo, fecha, nombre_base, self.root_dir)

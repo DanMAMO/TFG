@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8c4e76e0-2e2a-4f05-8d4f-45fa2f53c27e" name="Changes" comment="Primeros archivos, prueba y pruebas_panda">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Paciente0.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rodrigo.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pruebas/prueba_panda.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pruebas/prueba_panda.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,32 +47,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.galeria_de_tiro.executor": "Run",
-    "Python.procesar.executor": "Run",
-    "Python.prueba_panda (1).executor": "Run",
-    "Python.prueba_panda.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "rama__modular",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.galeria_de_tiro.executor&quot;: &quot;Run&quot;,
+    &quot;Python.procesar.executor&quot;: &quot;Run&quot;,
+    &quot;Python.prueba_panda (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.prueba_panda.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;rama__modular&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Daniel M.M\PycharmProjects\TFG" />
       <recent name="$PROJECT_DIR$/.venv/bin/pruebas" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.prueba_panda">
     <configuration name="prueba_panda (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TFG" />
       <option name="ENV_FILES" value="" />
@@ -142,7 +145,10 @@
       <workItem from="1742920715633" duration="2647000" />
       <workItem from="1742991111916" duration="368000" />
       <workItem from="1743787910466" duration="1198000" />
-      <workItem from="1744023412295" duration="10927000" />
+      <workItem from="1744023412295" duration="11587000" />
+      <workItem from="1744217657178" duration="301000" />
+      <workItem from="1744534932157" duration="3365000" />
+      <workItem from="1744918403113" duration="361000" />
     </task>
     <task id="LOCAL-00001" summary="Primeros archivos, prueba y pruebas_panda">
       <option name="closed" value="true" />

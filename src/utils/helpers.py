@@ -59,7 +59,7 @@ def guardar_csvs(df_resumen, df_tracking, codigo, fecha, nombre_base, root_dir):
     resumen_path = generar_nombre_unico(resumen_path)
     tracking_path = generar_nombre_unico(tracking_path)
 
-    df_resumen.to_csv(resumen_path, index=False)
-    df_tracking.to_csv(tracking_path, index=False)
+    df_resumen.to_csv(resumen_path, index=False, sep=";")
+    df_tracking.to_csv(tracking_path, index=False, sep=";")
 
     return resumen_path, tracking_path

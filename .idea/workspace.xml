@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c4e76e0-2e2a-4f05-8d4f-45fa2f53c27e" name="Changes" comment="Primeros archivos, prueba y pruebas_panda">
+      <change beforePath="$PROJECT_DIR$/.idea/TFG.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TFG.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Paciente0.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rodrigo.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pruebas/prueba_panda.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pruebas/prueba_panda.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,6 +147,7 @@
       <workItem from="1744217657178" duration="301000" />
       <workItem from="1744534932157" duration="3365000" />
       <workItem from="1744918403113" duration="361000" />
+      <workItem from="1745090824540" duration="736000" />
     </task>
     <task id="LOCAL-00001" summary="Primeros archivos, prueba y pruebas_panda">
       <option name="closed" value="true" />

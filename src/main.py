@@ -3,12 +3,11 @@ import os
 import glob
 import sys
 from galeria.procesar import InformeGaleria
+from memory.procesar import InformeMemory
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-DATA_DIR = os.path.join(ROOT_DIR, "data", "galeria_tiro")
 
-# Modo opcional con tkinter
-
+# === Modo manual ===
 def seleccionar_archivo():
     from tkinter import Tk, filedialog
     Tk().withdraw()
@@ -16,20 +15,39 @@ def seleccionar_archivo():
 
 modo_manual = "--manual" in sys.argv
 
+# === Asignar clase según carpeta o contenido ===
+def obtener_informe(path):
+    if "galeria" in path.lower():
+        return InformeGaleria(path, ROOT_DIR)
+    elif "memory" in path.lower():
+        return InformeMemory(path, ROOT_DIR)
+
+    with open(path, "r", encoding="utf-8") as f:
+        contenido = f.read(500).lower()
+
+    if "memory" in contenido:
+        return InformeMemory(path, ROOT_DIR)
+    elif "galeria de tiro" in contenido:
+        return InformeGaleria(path, ROOT_DIR)
+
+    raise ValueError(f"No se reconoce el tipo de informe: {path}")
+
 if modo_manual:
     print("🟢 Modo MANUAL activado")
     archivo = seleccionar_archivo()
     if archivo:
-        informe = InformeGaleria(archivo, ROOT_DIR)
+        informe = obtener_informe(archivo)
         resumen_path, tracking_path = informe.procesar()
         print(f"✅ Procesado único:\n- {resumen_path}\n- {tracking_path}")
     else:
         print("❌ No se seleccionó ningún archivo.")
 else:
-    print("🟡 Modo BATCH: procesando todos los archivos en carpeta")
-    informes = glob.glob(os.path.join(DATA_DIR, "*.txt"))
-    for path in informes:
-        informe = InformeGaleria(path, ROOT_DIR)
-        resumen_path, tracking_path = informe.procesar()
-        print(f"\n✅ Procesado: {os.path.basename(path)}")
-        print(f" - Resumen: {resumen_path}\n - Tracking: {tracking_path}")
+    print("🟡 Modo BATCH: procesando todos los archivos en data/*/")
+    for carpeta in ["galeria", "memory"]:
+        ruta = os.path.join(ROOT_DIR, "data", carpeta)
+        informes = glob.glob(os.path.join(ruta, "*.txt"))
+        for path in informes:
+            informe = obtener_informe(path)
+            resumen_path, tracking_path = informe.procesar()
+            print(f"\n✅ Procesado: {os.path.basename(path)}")
+            print(f" - Resumen: {resumen_path}\n - Tracking: {tracking_path}")

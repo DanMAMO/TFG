@@ -1,55 +1,96 @@
-# TFG - Procesamiento de Informes por Juego
+# README.md
 
-Este proyecto procesa informes de tareas cognitivas por paciente y juego, extrayendo datos clave y organizando los resultados automáticamente.
+# TFG - Procesador de Informes Cognitivos
 
-## 📁 Estructura del Proyecto
+Este proyecto automatiza el procesamiento de archivos `.txt` generados por distintos juegos cognitivos, extrayendo datos relevantes y generando informes `.csv` organizados por paciente, año y mes.
+
+---
+
+## 📂 Estructura del Proyecto
 
 ```
 TFG/
 ├── src/
-│   ├── base/
-│   │   └── informe_base.py       # Clase base abstracta para todos los juegos
-│   ├── galeria/
-│   │   └── procesar.py         # Procesamiento específico para galería de tiro
-│   ├── utils/
-│   │   └── helpers.py            # Funciones comunes: fecha, guardado, nombrado
-│   └── main.py                  # Ejecuta procesamiento en lote o manual
+│   ├── base/                   # Clase base común para todos los informes
+│   │   └── informe_base.py
+│   ├── galeria/               # Procesamiento para juego Galería de tiro
+│   │   └── procesar.py
+│   ├── memory/                # Procesamiento para juego Memory
+│   │   └── procesar.py
+│   ├── utils/                 # Utilidades generales
+│   │   └── helpers.py
+│   └── main.py                # Entrada principal para ejecutar todo
 ├── data/
-│   └── galeria_tiro/           # Archivos .txt crudos por paciente
-├── outputs/
-│   └── pacientes/...           # Resultados CSV organizados por paciente/año/mes
-├── .gitignore
+│   ├── galeria/               # Archivos .txt de Galería
+│   └── memory/                # Archivos .txt de Memory
+├── outputs/                   # Resultados exportados por paciente/año/mes
 └── README.md
 ```
 
-## ⚙️ Cómo usar
+---
 
-### Modo BATCH (varios archivos automáticamente):
+## ▶️ Cómo ejecutar
 
-1. Colocá archivos `.txt` en `data/galeria_tiro/`
-2. Ejecutá:
+### ✅ Modo BATCH (procesar todo lo que haya en `data/*/`):
 
 ```bash
 python src/main.py
 ```
 
-### Modo MANUAL (archivo único con selector visual):
+### ✅ Modo MANUAL (elegir archivo con ventana):
 
 ```bash
 python src/main.py --manual
 ```
 
-Se generarán `.csv` por cada informe en:
+El sistema detectará automáticamente el tipo de informe según el **nombre de la carpeta** o el **contenido del archivo** (por ejemplo: "Tarea de memory").
+
+---
+
+## 📄 Qué genera
+
+Por cada informe procesado, se generan dos archivos CSV:
+
+- `*_resumen.csv` → con los datos globales del informe
+- `*_tracking.csv` → con el seguimiento frame a frame
+
+Ubicados en:
 
 ```
 outputs/pacientes/{codigo}/{año}/{mes}/
 ```
 
-## ✅ Funcionalidades
+Los nombres de archivo se guardan con separador `;` y evitan sobrescritura (`v2`, `v3`, ...).
 
-- Extrae resumen y tracking frame a frame
-- Genera CSVs automáticamente con nombre único
-- Detecta fecha desde el nombre del archivo
-- Organiza resultados de forma escalable
-- Modo dual: automático o manual
-- Base abstracta lista para extender a múltiples juegos
+---
+
+## 🎮 Juegos soportados actualmente
+
+- 🟢 **Galería de tiro** (`galeria/`)
+- 🟢 **Memory** (`memory/`)
+
+Más juegos como "Topos" y "Secuencia" pueden añadirse fácilmente gracias a la arquitectura modular basada en herencia (`InformeBase`).
+
+---
+
+## 🧠 Dependencias
+
+- Python 3.8+
+- pandas
+
+Instalación:
+```bash
+pip install pandas
+```
+
+---
+
+## ✅ Buenas prácticas
+
+- No versionar la carpeta `outputs/`: ya está ignorada vía `.gitignore`
+- Usar ramas como `juegos` para desarrollo e integración progresiva de nuevos módulos
+- Agregar una nueva clase hija en su carpeta (`src/{juego}/procesar.py`) y conectarla en `main.py`
+
+---
+
+¿Listo para añadir más juegos o exportar a Excel? Este proyecto lo permite sin romper la arquitectura 💪

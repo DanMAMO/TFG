@@ -11,18 +11,23 @@ Este proyecto permite procesar automáticamente informes en formato `.txt` gener
 ```
 TFG/
 ├── data/
+│   ├── aventuras/
+│   ├── caminos/
 │   ├── galeria/
 │   ├── memory/
-│   ├── topos/
-│   └── caminos/
+│   ├── pacientes/
+│   └── topos/
 ├── outputs/
 │   └── pacientes/{codigo}/{año}/{mes}/
 ├── src/
+│   ├── aventuras/
+│   ├── base/
+│   ├── caminos/
 │   ├── galeria/
 │   ├── memory/
+│   ├── pruebas/
 │   ├── topos/
-│   ├── caminos/
-│   ├── base/
+│   ├── usuario/
 │   ├── utils/
 │   └── main.py
 └── README.md
@@ -49,7 +54,12 @@ python src/main.py
 
 ---
 
-## ✅ Juegos soportados
+## ✅ Informes soportados
+
+### 👤 Resumen de Usuario
+Detectado por:
+- Nombre del archivo tipo `Paciente000.txt`
+- Contenido que contenga `"nombre"` y `"codigo"`
 
 ### 🎯 Galería de tiro
 Detectado por:
@@ -79,6 +89,16 @@ Detectado por:
 ---
 
 ## 📄 Formato de Salida
+
+### `resumen_usuario_*.csv`
+Contiene:
+- `nombre`, `codigo`, `esZurdo`, niveles y puntuaciones por tarea
+- Sumatorios como `nivelesRecordMemory`, `medallasTotalesMemory`
+- `multiplicadorVelocidad`
+- `fecha_generacion` y `fecha_formateada` del momento de procesado
+
+Se guarda en:
+outputs/pacientes/{codigo}/resumen_usuario_{nombre}_{dd-mm-yyyy}.csv
 
 ### `*_resumen.csv`
 Contiene:

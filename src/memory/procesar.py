@@ -1,9 +1,10 @@
 # src/memory/procesar.py
 import pandas as pd
 import os
-# import re
+import re
 from utils.helpers import (
     extraer_fecha_desde_lineas,
+    formatear_fecha_ddmmYYYY,
     guardar_csvs,
     parsear_clave_valor,
     extraer_valores_multilinea,
@@ -48,9 +49,14 @@ class InformeMemory(InformeBase):
         resumen["partida de bonus"] = resumen.get("partida de bonus") or extraer_patron(lineas, r"partida de bonus\??\s*(si|no)")
         resumen["la matriz del memory es"] = resumen.get("la matriz del memory es") or extraer_patron(lineas, r"la matriz del memory es\s+(\d+x\d+)")
 
+        nombre_base = os.path.splitext(os.path.basename(self.path_txt))[0]
+        fecha = extraer_fecha_desde_lineas(lineas, nombre_base)
+        fecha_formateada = formatear_fecha_ddmmYYYY(fecha)
+
         df_resumen = pd.DataFrame([{
             "codigo": resumen.get("codigo del paciente"),
             "fecha": resumen.get("fecha de registro"),
+            "fecha_num": fecha_formateada,
             "nivel": resumen.get("nivel actual"),
             "bonus": resumen.get("partida de bonus"),
             "aciertos": resumen.get("aciertos"),
@@ -75,8 +81,6 @@ class InformeMemory(InformeBase):
 
         df_tracking = pd.DataFrame(tracking_filas, columns=columnas)
 
-        nombre_base = os.path.splitext(os.path.basename(self.path_txt))[0]
-        fecha = extraer_fecha_desde_lineas(lineas, nombre_base)
         codigo = df_resumen.at[0, "codigo"]
 
         return guardar_csvs(df_resumen, df_tracking, codigo, fecha, nombre_base, self.root_dir)

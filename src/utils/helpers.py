@@ -1,18 +1,8 @@
 # utils/helpers.py
 import os
 import re
+import pandas as pd
 from datetime import datetime
-
-def generar_nombre_unico(base_path):
-    if not os.path.exists(base_path):
-        return base_path
-    nombre, extension = os.path.splitext(base_path)
-    contador = 2
-    nuevo_path = f"{nombre}_v{contador}{extension}"
-    while os.path.exists(nuevo_path):
-        contador += 1
-        nuevo_path = f"{nombre}_v{contador}{extension}"
-    return nuevo_path
 
 def extraer_fecha_desde_lineas(lineas, nombre_archivo=None):
     meses = {
@@ -32,7 +22,6 @@ def extraer_fecha_desde_lineas(lineas, nombre_archivo=None):
                         return datetime.strptime(fecha_str, "%Y-%m-%d %H:%M:%S")
                     except ValueError:
                         break
-    # Fallback: intentar desde nombre del archivo
     if nombre_archivo:
         match = re.search(r"(\d{1,2}) (\w+) (\d{4}) (\d{2})-(\d{2})-(\d{2})", nombre_archivo)
         if match:
@@ -46,11 +35,22 @@ def extraer_fecha_desde_lineas(lineas, nombre_archivo=None):
                     pass
     return datetime.now()
 
-def guardar_csvs(df_resumen, df_tracking, codigo, fecha, nombre_base, root_dir):
-    anio = str(fecha.year)
-    mes = str(fecha.month).zfill(2)
+def formatear_fecha_ddmmYYYY(fecha):
+    return fecha.strftime("%d.%m.%Y")
 
-    output_dir = os.path.join(root_dir, "outputs", "pacientes", codigo, anio, mes)
+def generar_nombre_unico(base_path):
+    if not os.path.exists(base_path):
+        return base_path
+    nombre, extension = os.path.splitext(base_path)
+    contador = 2
+    nuevo_path = f"{nombre}_v{contador}{extension}"
+    while os.path.exists(nuevo_path):
+        contador += 1
+        nuevo_path = f"{nombre}_v{contador}{extension}"
+    return nuevo_path
+
+def guardar_csvs(df_resumen, df_tracking, codigo, fecha, nombre_base, root_dir):
+    output_dir = os.path.join(root_dir, "outputs", "pacientes", codigo, fecha.strftime("%Y"), fecha.strftime("%m"))
     os.makedirs(output_dir, exist_ok=True)
 
     resumen_path = os.path.join(output_dir, f"{nombre_base}_resumen.csv")

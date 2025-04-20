@@ -2,7 +2,7 @@
 import pandas as pd
 import os
 from base.informe_base import InformeBase
-from utils.helpers import extraer_fecha_desde_lineas, guardar_csvs, parsear_clave_valor
+from utils.helpers import extraer_fecha_desde_lineas, formatear_fecha_ddmmYYYY, guardar_csvs, parsear_clave_valor
 
 
 class InformeGaleria(InformeBase):
@@ -24,7 +24,7 @@ class InformeGaleria(InformeBase):
 
         nombre_base = os.path.splitext(os.path.basename(self.path_txt))[0]
         fecha = extraer_fecha_desde_lineas(lineas, nombre_base)
-        fecha_formateada = fecha.strftime("%d.%m.%Y")
+        fecha_formateada = formatear_fecha_ddmmYYYY(fecha)
 
         df_resumen = pd.DataFrame([{
             "codigo": resumen.get("codigo del paciente"),

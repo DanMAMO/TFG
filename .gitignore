@@ -14,8 +14,8 @@ __pycache__/
 venv/
 
 # === Archivos y directorios generados automáticamente ===
-/outputs/           # Resultados finales (resumen y tracking)
-/data/              # Archivos de entrada de ejemplo o reales
+outputs/           # Resultados finales (resumen y tracking)
+data/              # Archivos de entrada de ejemplo o reales
 *.csv               # Archivos de salida generados
 *.zip               # Informes comprimidos o de ejemplo
 

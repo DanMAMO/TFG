@@ -1,11 +1,11 @@
-# === IDEs y configuración de proyecto ===
+# === IDEs ===
 .idea/
 *.iml
 .vscode/
 
-# === Compilados y cachés de Python ===
+# === Python ===
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
 
@@ -13,16 +13,17 @@ __pycache__/
 .venv/
 venv/
 
-# === Archivos y directorios generados automáticamente ===
-/outputs/
-.idea/workspace.xml
-/data/
-pacientes/
+# === Datos y salidas generadas ===
+outputs/
+data/
 *.csv
 *.zip
-*.txt
+
+# === Archivos sensibles o innecesarios ===
+*.bak
+*.tmp
+.DS_Store
 
 # === Otros ===
 out/
 gen/
-.DS_Store

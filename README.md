@@ -49,7 +49,7 @@ python src/main.py --manual
 ```bash
 python src/main.py
 ```
-- Recorre automáticamente todos los `.txt` en `data/galeria`, `data/memory`, `data/topos`, y `data/caminos`
+- Recorre automáticamente todos los `.txt` en `data/galeria`, `data/memory`, `data/topos`, , `data/caminos`, `data/aventuras` y `data/pacientes`
 - Procesa cada uno y los guarda organizadamente en `outputs/pacientes/...`
 
 ---
@@ -116,11 +116,6 @@ Contiene:
 ## 🛠️ Dependencias
 - Python 3.10+
 - pandas
-
-Instalación:
-```bash
-pip install -r requirements.txt
-```
 
 ---
 

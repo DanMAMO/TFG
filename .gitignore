@@ -15,9 +15,9 @@ venv/
 
 # === Archivos y directorios generados automáticamente ===
 /outputs/
-
 .idea/workspace.xml
 /data/
+pacientes/
 *.csv
 *.zip
 *.txt

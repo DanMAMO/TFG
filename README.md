@@ -1,96 +1,116 @@
-# README.md
+# 🧠 Proyecto TFG - Procesamiento de Informes Cognitivos
 
-# TFG - Procesador de Informes Cognitivos
+Este proyecto permite procesar automáticamente informes en formato `.txt` generados por distintas tareas de evaluación cognitiva: **Galería de tiro**, **Memory**, y **Topos**. Extrae información clave y genera dos archivos `.csv` por cada informe:
 
-Este proyecto automatiza el procesamiento de archivos `.txt` generados por distintos juegos cognitivos, extrayendo datos relevantes y generando informes `.csv` organizados por paciente, año y mes.
+- `*_resumen.csv`: con metadatos relevantes del paciente y la tarea
+- `*_tracking.csv`: con los datos frame a frame del desarrollo de la tarea
 
 ---
 
-## 📂 Estructura del Proyecto
-
+## 📁 Estructura del Proyecto
 ```
 TFG/
-├── src/
-│   ├── base/                   # Clase base común para todos los informes
-│   │   └── informe_base.py
-│   ├── galeria/               # Procesamiento para juego Galería de tiro
-│   │   └── procesar.py
-│   ├── memory/                # Procesamiento para juego Memory
-│   │   └── procesar.py
-│   ├── utils/                 # Utilidades generales
-│   │   └── helpers.py
-│   └── main.py                # Entrada principal para ejecutar todo
 ├── data/
-│   ├── galeria/               # Archivos .txt de Galería
-│   └── memory/                # Archivos .txt de Memory
-├── outputs/                   # Resultados exportados por paciente/año/mes
+│   ├── galeria/
+│   ├── memory/
+│   └── topos/
+├── outputs/
+│   └── pacientes/{codigo}/{año}/{mes}/
+├── src/
+│   ├── galeria/
+│   ├── memory/
+│   ├── topos/
+│   ├── base/
+│   ├── utils/
+│   └── main.py
 └── README.md
 ```
 
 ---
 
-## ▶️ Cómo ejecutar
+## 🚀 Uso
 
-### ✅ Modo BATCH (procesar todo lo que haya en `data/*/`):
-
-```bash
-python src/main.py
-```
-
-### ✅ Modo MANUAL (elegir archivo con ventana):
-
+### Modo manual
 ```bash
 python src/main.py --manual
 ```
+- Abre un selector de archivos.
+- Detecta automáticamente el tipo de juego en el `.txt`.
+- Procesa y genera dos `.csv` de salida.
 
-El sistema detectará automáticamente el tipo de informe según el **nombre de la carpeta** o el **contenido del archivo** (por ejemplo: "Tarea de memory").
-
----
-
-## 📄 Qué genera
-
-Por cada informe procesado, se generan dos archivos CSV:
-
-- `*_resumen.csv` → con los datos globales del informe
-- `*_tracking.csv` → con el seguimiento frame a frame
-
-Ubicados en:
-
+### Modo batch (procesamiento masivo)
+```bash
+python src/main.py
 ```
-outputs/pacientes/{codigo}/{año}/{mes}/
-```
-
-Los nombres de archivo se guardan con separador `;` y evitan sobrescritura (`v2`, `v3`, ...).
+- Recorre automáticamente todos los `.txt` en `data/galeria`, `data/memory`, y `data/topos`
+- Procesa cada uno y los guarda organizadamente en `outputs/pacientes/...`
 
 ---
 
-## 🎮 Juegos soportados actualmente
+## ✅ Juegos soportados
 
-- 🟢 **Galería de tiro** (`galeria/`)
-- 🟢 **Memory** (`memory/`)
+### 🎯 Galería de tiro
+Detectado por:
+- Nombre del archivo o
+- Contenido que incluya `galeria de tiro`
 
-Más juegos como "Topos" y "Secuencia" pueden añadirse fácilmente gracias a la arquitectura modular basada en herencia (`InformeBase`).
+### 🧠 Memory
+Detectado por:
+- Nombre del archivo o
+- Contenido que incluya `memory`
+
+### 🕳️ Topos
+Detectado por:
+- Nombre del archivo o
+- Contenido que incluya `tarea de topos`
 
 ---
 
-## 🧠 Dependencias
+## 📄 Formato de Salida
 
-- Python 3.8+
+### `*_resumen.csv`
+Contiene:
+- `codigo`, `fecha`, `fecha_num`
+- Datos relevantes como `nivel`, `aciertos`, `errores`, etc.
+- Variables específicas del juego (estimulos, posiciones, matriz, etc.)
+
+### `*_tracking.csv`
+Contiene:
+- `tiempo`, `x`, `y`, `estimulo_objetivo`, `matriz_estado`, etc.
+- En formato estructurado y ordenado
+
+---
+
+## 🛠️ Dependencias
+- Python 3.10+
 - pandas
 
 Instalación:
 ```bash
-pip install pandas
+pip install -r requirements.txt
 ```
 
 ---
 
-## ✅ Buenas prácticas
-
-- No versionar la carpeta `outputs/`: ya está ignorada vía `.gitignore`
-- Usar ramas como `juegos` para desarrollo e integración progresiva de nuevos módulos
-- Agregar una nueva clase hija en su carpeta (`src/{juego}/procesar.py`) y conectarla en `main.py`
+## 🔧 Notas de desarrollo
+- Las fechas se normalizan al formato `dd.mm.yyyy` (`fecha_num`)
+- Las matrices del estado de tareas se representan en una sola columna (`matriz_estado`) como una cadena unificada separada por `-`
+- Las clases de cada juego heredan de una base común `InformeBase`
+- Se pueden agregar más tareas creando nuevos módulos similares
 
 ---
 
-¿Listo para añadir más juegos o exportar a Excel? Este proyecto lo permite sin romper la arquitectura 💪
+## ✅ Buenas prácticas del proyecto
+
+- Mantener los módulos por tarea en carpetas independientes (`galeria`, `memory`, `topos`, etc.)
+- Reutilizar funciones comunes desde `utils/helpers.py`
+- Usar nombres de archivo descriptivos para los `.txt`
+- No versionar archivos de salida ni temporales. Asegurarse que en `.gitignore` esté:
+  ```
+  /outputs
+  *.csv
+  *.zip
+  ```
+- Probar primero en modo manual antes de ejecutar en batch
+- Documentar cada nueva tarea o modificación importante en este README
+

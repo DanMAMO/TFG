@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c4e76e0-2e2a-4f05-8d4f-45fa2f53c27e" name="Changes" comment="Primeros archivos, prueba y pruebas_panda">
+      <change afterPath="$PROJECT_DIR$/src/topos/procesar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/galeria/procesar.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/galeria/procesar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/memory/procesar.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/memory/procesar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/helpers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,25 +47,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.galeria_de_tiro.executor&quot;: &quot;Run&quot;,
-    &quot;Python.procesar.executor&quot;: &quot;Run&quot;,
-    &quot;Python.prueba_panda (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.prueba_panda.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;juegos&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.galeria_de_tiro.executor": "Run",
+    "Python.procesar.executor": "Run",
+    "Python.prueba_panda (1).executor": "Run",
+    "Python.prueba_panda.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "juegos",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Daniel M.M/PycharmProjects/TFG/data/topos",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Daniel M.M\PycharmProjects\TFG" />
@@ -150,7 +151,7 @@
       <workItem from="1744534932157" duration="3365000" />
       <workItem from="1744918403113" duration="361000" />
       <workItem from="1745090824540" duration="7094000" />
-      <workItem from="1745149779363" duration="5013000" />
+      <workItem from="1745149779363" duration="5986000" />
     </task>
     <task id="LOCAL-00001" summary="Primeros archivos, prueba y pruebas_panda">
       <option name="closed" value="true" />

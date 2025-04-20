@@ -71,6 +71,11 @@ Detectado por:
 - Nombre del archivo o
 - Contenido que incluya `tarea de caminos`
 
+### 🗺️ Aventuras
+Detectado por:
+- Nombre del archivo o
+- Contenido que incluya `tarea de aventuras`
+
 ---
 
 ## 📄 Formato de Salida

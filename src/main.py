@@ -6,6 +6,8 @@ from galeria.procesar import InformeGaleria
 from memory.procesar import InformeMemory
 from topos.procesar import InformeTopos
 from caminos.procesar import InformeCaminos
+from aventuras.procesar import InformeAventuras
+
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -27,6 +29,8 @@ def obtener_informe(path):
         return InformeTopos(path, ROOT_DIR)
     elif "caminos" in path.lower():
         return InformeCaminos(path, ROOT_DIR)
+    elif "aventuras" in path.lower():
+        return InformeAventuras(path, ROOT_DIR)
 
     with open(path, "r", encoding="utf-8") as f:
         contenido = f.read(500).lower()
@@ -39,6 +43,8 @@ def obtener_informe(path):
         return InformeTopos(path, ROOT_DIR)
     elif "tarea de caminos" in contenido:
         return InformeCaminos(path, ROOT_DIR)
+    elif "tarea de aventuras" in contenido:
+        return InformeAventuras(path, ROOT_DIR)
 
     raise ValueError(f"No se reconoce el tipo de informe: {path}")
 
@@ -53,7 +59,7 @@ if modo_manual:
         print("❌ No se seleccionó ningún archivo.")
 else:
     print("🟡 Modo BATCH: procesando todos los archivos en data/*/")
-    for carpeta in ["galeria", "memory", "topos", "caminos"]:
+    for carpeta in ["galeria", "memory", "topos", "caminos", "aventuras"]:
         ruta = os.path.join(ROOT_DIR, "data", carpeta)
         informes = glob.glob(os.path.join(ruta, "*.txt"))
         for path in informes:

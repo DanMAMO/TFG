@@ -8,3 +8,5 @@ out
 gen
 # Ignorar todos los resultados generados
 /outputs/
+
+.idea/workspace.xml

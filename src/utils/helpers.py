@@ -63,3 +63,32 @@ def guardar_csvs(df_resumen, df_tracking, codigo, fecha, nombre_base, root_dir):
     df_tracking.to_csv(tracking_path, index=False, sep=";")
 
     return resumen_path, tracking_path
+
+def parsear_clave_valor(linea):
+    if ":" in linea:
+        clave, valor = linea.split(":", 1)
+        return clave.strip().lower(), valor.strip()
+    return None, None
+
+def extraer_valores_multilinea(lineas, i, separador=";", stopwords=("Posiciones", "Leyenda")):
+    valores = []
+    for j in range(i + 1, len(lineas)):
+        l = lineas[j].strip()
+        if any(l.startswith(stop) for stop in stopwords) or not l:
+            break
+        valores += [v.strip() for v in l.split(separador) if v.strip()]
+    return valores
+
+def extraer_matriz_len(matriz_str):
+    try:
+        cols, rows = map(int, matriz_str.lower().split("x"))
+        return cols * rows
+    except:
+        return 0
+
+def extraer_patron(lineas, regex, group=1):
+    for linea in lineas:
+        match = re.search(regex, linea.lower())
+        if match:
+            return match.group(group).strip().capitalize()
+    return ""

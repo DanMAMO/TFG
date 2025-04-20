@@ -1,8 +1,15 @@
 # src/memory/procesar.py
 import pandas as pd
 import os
-import re
-from utils.helpers import extraer_fecha_desde_lineas, guardar_csvs
+# import re
+from utils.helpers import (
+    extraer_fecha_desde_lineas,
+    guardar_csvs,
+    parsear_clave_valor,
+    extraer_valores_multilinea,
+    extraer_patron,
+    extraer_matriz_len,
+)
 from base.informe_base import InformeBase
 
 class InformeMemory(InformeBase):
@@ -24,36 +31,22 @@ class InformeMemory(InformeBase):
                 tabla_inicio = i + 1
                 break
             elif ":" in linea:
-                clave, valor = linea.split(":", 1)
-                resumen[clave.strip().lower()] = valor.strip()
+                clave, valor = parsear_clave_valor(linea)
+                if clave:
+                    resumen[clave] = valor
             elif "Estimulos seleccionados para las tarjetas" in linea:
                 contenido_mismo_renglon = linea.replace("Estimulos seleccionados para las tarjetas", "").strip()
                 if contenido_mismo_renglon:
                     estimulos += [e.strip() for e in contenido_mismo_renglon.split(";") if e.strip()]
-                for j in range(i + 1, len(lineas)):
-                    est = lineas[j].strip()
-                    if est.startswith("Posiciones") or est.startswith("Leyenda") or not est:
-                        break
-                    estimulos += [e.strip() for e in est.split(";") if e.strip()]
+                estimulos += extraer_valores_multilinea(lineas, i, separador=";")
             elif "Posiciones fijas de las tarjetas" in linea:
                 contenido_mismo_renglon = linea.replace("Posiciones fijas de las tarjetas", "").strip()
                 if contenido_mismo_renglon:
                     posiciones += [p.strip() for p in contenido_mismo_renglon.split() if p.strip()]
-                for j in range(i + 1, len(lineas)):
-                    pos = lineas[j].strip()
-                    if pos.startswith("Leyenda") or not pos:
-                        break
-                    posiciones += [p.strip() for p in pos.split() if p.strip()]
+                posiciones += extraer_valores_multilinea(lineas, i, separador=" ", stopwords=("Leyenda",))
 
-        for linea in lineas:
-            if not resumen.get("partida de bonus"):
-                match_bonus = re.search(r"partida de bonus\??\s*(si|no)", linea.lower())
-                if match_bonus:
-                    resumen["partida de bonus"] = match_bonus.group(1).capitalize()
-            if not resumen.get("la matriz del memory es"):
-                match = re.search(r"la matriz del memory es\s+(\d+x\d+)", linea.lower())
-                if match:
-                    resumen["la matriz del memory es"] = match.group(1)
+        resumen["partida de bonus"] = resumen.get("partida de bonus") or extraer_patron(lineas, r"partida de bonus\??\s*(si|no)")
+        resumen["la matriz del memory es"] = resumen.get("la matriz del memory es") or extraer_patron(lineas, r"la matriz del memory es\s+(\d+x\d+)")
 
         df_resumen = pd.DataFrame([{
             "codigo": resumen.get("codigo del paciente"),
@@ -68,13 +61,7 @@ class InformeMemory(InformeBase):
         }])
 
         tabla_data = [line.strip() for line in lineas[tabla_inicio:] if line.strip()]
-
-        matriz_size = resumen.get("la matriz del memory es", "0x0")
-        try:
-            cols, rows = map(int, matriz_size.lower().split("x"))
-            matriz_len = cols * rows
-        except:
-            matriz_len = 0
+        matriz_len = extraer_matriz_len(resumen.get("la matriz del memory es", "0x0"))
 
         columnas = ["tiempo", "x", "y", "matriz_vista", "matriz_estado"]
         tracking_filas = []

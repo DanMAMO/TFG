@@ -22,3 +22,4 @@ data/              # Archivos de entrada de ejemplo o reales
 # === Otros ===
 out/
 gen/
+.DS_Store

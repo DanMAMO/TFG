@@ -1,2 +1,0 @@
-codigo;fecha;nivel;bonus;aciertos;errores;matriz;estimulos;posiciones_tarjetas
-000;lunes, 08 mayo 2023 11-05-02;0;;2;1;;Posiciones fijas de las tarjetas (741,463) (884,468) (1032,463) (1178,463);"Leyenda: tiempo; x; y; matriz con las tarjetas ya vistas; matriz con el estado actual del tablero"

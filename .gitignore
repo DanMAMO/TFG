@@ -1,12 +1,28 @@
-### Example user template template
-### Example user template
-
-# IntelliJ project files
-.idea
+# === IDEs y configuración de proyecto ===
+.idea/
 *.iml
-out
-gen
-# Ignorar todos los resultados generados
+.vscode/
+
+# === Compilados y cachés de Python ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# === Entornos virtuales ===
+.venv/
+venv/
+
+# === Archivos y directorios generados automáticamente ===
 /outputs/
 
 .idea/workspace.xml
+/data/
+*.csv
+*.zip
+*.txt
+
+# === Otros ===
+out/
+gen/
+.DS_Store

@@ -3,7 +3,6 @@ import os
 
 # === CONFIGURACIÓN: Cambiar solo esta ruta ===
 #archivo_txt = "ruta/a/tu/informe.txt"  # <-- editá esta línea
-archivo_txt = "C:/Users/Daniel M.M/PycharmProjects/TFG/001-Tarea galeria de tiro-jueves, 18 marzo 2021 11-36-06.txt"
 # === PROCESAMIENTO ===
 
 # Leer líneas del archivo

@@ -1,6 +1,6 @@
 # 🧠 Proyecto TFG - Procesamiento de Informes Cognitivos
 
-Este proyecto permite procesar automáticamente informes en formato `.txt` generados por distintas tareas de evaluación cognitiva: **Galería de tiro**, **Memory**, y **Topos**. Extrae información clave y genera dos archivos `.csv` por cada informe:
+Este proyecto permite procesar automáticamente informes en formato `.txt` generados por distintas tareas de evaluación cognitiva: **Galería de tiro**, **Memory**, **Topos**, y **Caminos**. Extrae información clave y genera dos archivos `.csv` por cada informe:
 
 - `*_resumen.csv`: con metadatos relevantes del paciente y la tarea
 - `*_tracking.csv`: con los datos frame a frame del desarrollo de la tarea
@@ -13,13 +13,15 @@ TFG/
 ├── data/
 │   ├── galeria/
 │   ├── memory/
-│   └── topos/
+│   ├── topos/
+│   └── caminos/
 ├── outputs/
 │   └── pacientes/{codigo}/{año}/{mes}/
 ├── src/
 │   ├── galeria/
 │   ├── memory/
 │   ├── topos/
+│   ├── caminos/
 │   ├── base/
 │   ├── utils/
 │   └── main.py
@@ -42,7 +44,7 @@ python src/main.py --manual
 ```bash
 python src/main.py
 ```
-- Recorre automáticamente todos los `.txt` en `data/galeria`, `data/memory`, y `data/topos`
+- Recorre automáticamente todos los `.txt` en `data/galeria`, `data/memory`, `data/topos`, y `data/caminos`
 - Procesa cada uno y los guarda organizadamente en `outputs/pacientes/...`
 
 ---
@@ -64,6 +66,11 @@ Detectado por:
 - Nombre del archivo o
 - Contenido que incluya `tarea de topos`
 
+### 🧭 Caminos
+Detectado por:
+- Nombre del archivo o
+- Contenido que incluya `tarea de caminos`
+
 ---
 
 ## 📄 Formato de Salida
@@ -76,8 +83,8 @@ Contiene:
 
 ### `*_tracking.csv`
 Contiene:
-- `tiempo`, `x`, `y`, `estimulo_objetivo`, `matriz_estado`, etc.
-- En formato estructurado y ordenado
+- `tiempo`, `x`, `y`, y otras variables específicas según el juego
+- En el caso de **Caminos**, también incluye las posiciones fijas de las tarjetas en cada fila
 
 ---
 
@@ -102,7 +109,7 @@ pip install -r requirements.txt
 
 ## ✅ Buenas prácticas del proyecto
 
-- Mantener los módulos por tarea en carpetas independientes (`galeria`, `memory`, `topos`, etc.)
+- Mantener los módulos por tarea en carpetas independientes (`galeria`, `memory`, `topos`, `caminos`, etc.)
 - Reutilizar funciones comunes desde `utils/helpers.py`
 - Usar nombres de archivo descriptivos para los `.txt`
 - No versionar archivos de salida ni temporales. Asegurarse que en `.gitignore` esté:

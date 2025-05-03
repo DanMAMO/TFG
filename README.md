@@ -124,6 +124,19 @@ Contiene:
 - Las matrices del estado de tareas se representan en una sola columna (`matriz_estado`) como una cadena unificada separada por `-`
 - Las clases de cada juego heredan de una base común `InformeBase`
 - Se pueden agregar más tareas creando nuevos módulos similares
+ + 
+ + ## 🧪 Análisis Exploratorio (EDA)
+ + En `src/analysis/eda.py` hay un script que:
+ +  - Carga todos los `*_resumen.csv` generados en `outputs/pacientes/`
+ +  - Calcula estadísticas descriptivas (`.describe()`) y las exporta a `eda_descriptivos.csv`
+ +  - Crea una tabla pivote de puntuaciones medias por paciente y juego
+ +  - Genera un gráfico de evolución de la puntuación para un paciente
+ + 
+ + ### Uso
+ + ```bash
+ + pip install pandas matplotlib
+ + python src/analysis/eda.py
+ + ```
 
 ---
 

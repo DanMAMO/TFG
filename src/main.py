@@ -144,22 +144,21 @@ if modo_manual:
         print("❌ No se seleccionó ningún archivo.")
 else:
     print("🟡 Modo BATCH: procesando todos los archivos en data/*/")
-    for carpeta in ["galeria", "memory", "topos", "caminos", "aventuras", "pacientes"]:
-        ruta = os.path.join(ROOT_DIR, "data", carpeta)
-        informes = glob.glob(os.path.join(ruta, "*.txt"))
-        for path in informes:
-            nombre = os.path.basename(path)
-            # Saltar archivos vacíos
-            if os.path.getsize(path) == 0:
-                print(f"\n⚠️ Informe vacío: {nombre} → saltando.")
-                continue
+    pattern = os.path.join(ROOT_DIR, "data", "**", "*.txt")
+    informes = glob.glob(pattern, recursive=True)
+    for path in informes:
+        nombre = os.path.basename(path)
+        # Saltar archivos vacíos
+        if os.path.getsize(path) == 0:
+            print(f"\n⚠️ Informe vacío: {nombre} → saltando.")
+            continue
 
-            try:
-                informe = obtener_informe(path)
-                resumen_path, tracking_path = informe.procesar()
-                print(f"\n✅ Procesado: {nombre}")
-                print(f" - Resumen: {resumen_path}\n - Tracking: {tracking_path}")
-            except Exception as err:
-                print(f"\n⚠️ Error procesando {nombre}: {err}")
-                # Continuar con el siguiente informe
-                continue
+        try:
+            informe = obtener_informe(path)
+            resumen_path, tracking_path = informe.procesar()
+            print(f"\n✅ Procesado: {nombre}")
+            print(f" - Resumen: {resumen_path}\n - Tracking: {tracking_path}")
+        except Exception as err:
+            print(f"\n⚠️ Error procesando {nombre}: {err}")
+            # Continuar con el siguiente informe
+            continue

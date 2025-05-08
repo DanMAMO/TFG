@@ -1,14 +1,16 @@
+Pensó durante un par de segundos
+
+
+```markdown
 # 🧠 Proyecto TFG - Procesamiento de Informes Cognitivos
 
-Este proyecto permite procesar automáticamente informes en formato `.txt` generados por distintas tareas de evaluación cognitiva: **Galería de tiro**, **Memory**, **Topos**, y **Caminos**. Extrae información clave y genera dos archivos `.csv` por cada informe:
-
-- `*_resumen.csv`: con metadatos relevantes del paciente y la tarea
-- `*_tracking.csv`: con los datos frame a frame del desarrollo de la tarea
+Este proyecto permite procesar automáticamente informes en formato `.txt` o `.json` generados por distintas tareas de evaluación cognitiva: **Galería de tiro**, **Memory**, **Topos**, **Caminos**, **Aventuras**, y **Resumen de Usuario**. Extrae información clave y genera uno o dos archivos `.csv` por cada informe, además de un análisis exploratorio (EDA) empaquetado para su importación en Power BI.
 
 ---
 
 ## 📁 Estructura del Proyecto
 ```
+
 TFG/
 ├── data/
 │   ├── aventuras/
@@ -18,7 +20,8 @@ TFG/
 │   ├── pacientes/
 │   └── topos/
 ├── outputs/
-│   └── pacientes/{codigo}/{año}/{mes}/
+│   ├── pacientes/{codigo}/{año}/{mes}/        # CSVs de resumen y tracking
+│   └── eda/                                   # EDA completo (Excel + gráfico)
 ├── src/
 │   ├── aventuras/
 │   ├── base/
@@ -29,9 +32,11 @@ TFG/
 │   ├── topos/
 │   ├── usuario/
 │   ├── utils/
+│   ├── analysis/                              # Script de EDA
 │   └── main.py
 └── README.md
-```
+
+````
 
 ---
 
@@ -40,117 +45,154 @@ TFG/
 ### Modo manual
 ```bash
 python src/main.py --manual
-```
-- Abre un selector de archivos.
-- Detecta automáticamente el tipo de juego en el `.txt`.
-- Procesa y genera dos `.csv` de salida.
+````
+
+* Abre un selector de archivos.
+* Detecta automáticamente el tipo de informe.
+* Procesa y genera los `.csv` de salida.
 
 ### Modo batch (procesamiento masivo)
+
 ```bash
 python src/main.py
 ```
-- Recorre automáticamente todos los `.txt` en `data/galeria`, `data/memory`, `data/topos`, , `data/caminos`, `data/aventuras` y `data/pacientes`
-- Procesa cada uno y los guarda organizadamente en `outputs/pacientes/...`
+
+* Recorre automáticamente todos los `.txt` en `data/galeria`, `data/memory`, `data/topos`, `data/caminos`, `data/aventuras` y `data/pacientes`.
+* Procesa cada uno y los guarda organizadamente en `outputs/pacientes/...`.
 
 ---
 
 ## ✅ Informes soportados
 
 ### 👤 Resumen de Usuario
+
 Detectado por:
-- Nombre del archivo tipo `Paciente000.txt`
-- Contenido que contenga `"nombre"` y `"codigo"`
+
+* Nombre del archivo tipo `Paciente000.txt`
+* Contenido JSON que contenga `"nombre"` y `"codigo"`
 
 ### 🎯 Galería de tiro
+
 Detectado por:
-- Nombre del archivo o
-- Contenido que incluya `galeria de tiro`
+
+* Nombre del archivo o
+* Contenido que incluya `galeria de tiro`
 
 ### 🧠 Memory
+
 Detectado por:
-- Nombre del archivo o
-- Contenido que incluya `memory`
+
+* Nombre del archivo o
+* Contenido que incluya `memory`
 
 ### 🕳️ Topos
+
 Detectado por:
-- Nombre del archivo o
-- Contenido que incluya `tarea de topos`
+
+* Nombre del archivo o
+* Contenido que incluya `tarea de topos`
 
 ### 🧭 Caminos
+
 Detectado por:
-- Nombre del archivo o
-- Contenido que incluya `tarea de caminos`
+
+* Nombre del archivo o
+* Contenido que incluya `tarea de caminos`
 
 ### 🗺️ Aventuras
+
 Detectado por:
-- Nombre del archivo o
-- Contenido que incluya `tarea de aventuras`
+
+* Nombre del archivo o
+* Contenido que incluya `tarea de aventuras`
 
 ---
 
 ## 📄 Formato de Salida
 
 ### `resumen_usuario_*.csv`
+
 Contiene:
-- `nombre`, `codigo`, `esZurdo`, niveles y puntuaciones por tarea
-- Sumatorios como `nivelesRecordMemory`, `medallasTotalesMemory`
-- `multiplicadorVelocidad`
-- `fecha_generacion` y `fecha_formateada` del momento de procesado
+
+* `nombre`, `codigo`, `esZurdo`, niveles y puntuaciones por tarea
+* Sumatorios como `nivelesRecordMemory`, `medallasTotalesMemory`
+* `multiplicadorVelocidad`
+* `fecha_generacion` y `fecha_formateada` del momento de procesado
 
 Se guarda en:
+
+```
 outputs/pacientes/{codigo}/resumen_usuario_{nombre}_{dd-mm-yyyy}.csv
+```
 
 ### `*_resumen.csv`
+
 Contiene:
-- `codigo`, `fecha`, `fecha_num`
-- Datos relevantes como `nivel`, `aciertos`, `errores`, etc.
-- Variables específicas del juego (estimulos, posiciones, matriz, etc.)
+
+* `codigo`, `fecha`, `fecha_num`
+* Datos relevantes: `nivel`, `aciertos`, `errores`, `omisiones`, `puntuacion`
+* Variables específicas del juego (estímulos, posiciones, matriz, etc.)
 
 ### `*_tracking.csv`
+
 Contiene:
-- `tiempo`, `x`, `y`, y otras variables específicas según el juego
-- En el caso de **Caminos**, también incluye las posiciones fijas de las tarjetas en cada fila
+
+* `tiempo`, `x`, `y`, y otras variables según el juego
+* En **Caminos**, incluye posiciones fijas de las tarjetas por fila
+* En **Aventuras**, cada par de coordenadas de `item` y `peligro` en columnas separadas
+
+---
+
+## 🧪 Análisis Exploratorio (EDA)
+
+En `src/analysis/eda.py` hay un script que:
+
+1. Carga todos los `*_resumen.csv` desde `outputs/pacientes/`.
+2. Genera un **Excel** `EDA_completo_{timestamp}.xlsx` con tres hojas:
+
+   * **DatosCrudos**: combinación de todos los resúmenes
+   * **Descriptivos**: estadísticas (`count`, `mean`, `std`, `min`, percentiles, `max`)
+   * **MediaPuntuacion**: tabla pivote de puntuación media por paciente y juego
+3. Genera un gráfico de evolución de puntuación para un paciente, guardado como `evolucion_{timestamp}.png`.
+4. Todos los resultados se almacenan en:
+
+```
+outputs/eda/
+├── EDA_completo_{timestamp}.xlsx
+└── evolucion_{timestamp}.png
+```
+
+### Uso
+
+```bash
+pip install pandas matplotlib xlsxwriter
+python src/analysis/eda.py
+```
 
 ---
 
 ## 🛠️ Dependencias
-- Python 3.10+
-- pandas
 
----
+* Python 3.10+
+* pandas
+* matplotlib
+* xlsxwriter
 
-## 🔧 Notas de desarrollo
-- Las fechas se normalizan al formato `dd.mm.yyyy` (`fecha_num`)
-- Las matrices del estado de tareas se representan en una sola columna (`matriz_estado`) como una cadena unificada separada por `-`
-- Las clases de cada juego heredan de una base común `InformeBase`
-- Se pueden agregar más tareas creando nuevos módulos similares
- + 
- + ## 🧪 Análisis Exploratorio (EDA)
- + En `src/analysis/eda.py` hay un script que:
- +  - Carga todos los `*_resumen.csv` generados en `outputs/pacientes/`
- +  - Calcula estadísticas descriptivas (`.describe()`) y las exporta a `eda_descriptivos.csv`
- +  - Crea una tabla pivote de puntuaciones medias por paciente y juego
- +  - Genera un gráfico de evolución de la puntuación para un paciente
- + 
- + ### Uso
- + ```bash
- + pip install pandas matplotlib
- + python src/analysis/eda.py
- + ```
+Instalación:
+
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
 ## ✅ Buenas prácticas del proyecto
 
-- Mantener los módulos por tarea en carpetas independientes (`galeria`, `memory`, `topos`, `caminos`, etc.)
-- Reutilizar funciones comunes desde `utils/helpers.py`
-- Usar nombres de archivo descriptivos para los `.txt`
-- No versionar archivos de salida ni temporales. Asegurarse que en `.gitignore` esté:
-  ```
-  /outputs
-  *.csv
-  *.zip
-  ```
-- Probar primero en modo manual antes de ejecutar en batch
-- Documentar cada nueva tarea o modificación importante en este README
+* Mantener módulos por tarea en carpetas independientes (`galeria`, `memory`, etc.)
+* Reutilizar funciones comunes desde `utils/helpers.py`
+* Probar primero en modo manual antes de ejecutar en batch
+* No versionar archivos de salida (`outputs/`, `eda/`, CSVs, PNGs) ni datos de prueba (`data/`)
+* Documentar cada nueva tarea o modificación importante en este README
 
+```
+```

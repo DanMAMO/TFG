@@ -1,10 +1,7 @@
-Pensó durante un par de segundos
-
-
 ```markdown
 # 🧠 Proyecto TFG - Procesamiento de Informes Cognitivos
 
-Este proyecto permite procesar automáticamente informes en formato `.txt` o `.json` generados por distintas tareas de evaluación cognitiva: **Galería de tiro**, **Memory**, **Topos**, **Caminos**, **Aventuras**, y **Resumen de Usuario**. Extrae información clave y genera uno o dos archivos `.csv` por cada informe, además de un análisis exploratorio (EDA) empaquetado para su importación en Power BI.
+Este proyecto permite procesar automáticamente informes en formato `.txt` generados por distintas tareas de evaluación cognitiva: **Galería de tiro**, **Memory**, **Topos**, **Caminos**, **Aventuras**, y **Resumen de Usuario**. Extrae información clave y genera uno o dos archivos `.csv` por cada informe, además de un análisis exploratorio (EDA) empaquetado para su importación en Power BI.
 
 ---
 
@@ -59,6 +56,22 @@ python src/main.py
 
 * Recorre automáticamente todos los `.txt` en `data/galeria`, `data/memory`, `data/topos`, `data/caminos`, `data/aventuras` y `data/pacientes`.
 * Procesa cada uno y los guarda organizadamente en `outputs/pacientes/...`.
+
+### Limpieza de carpetas y archivos vacíos
+
+**Nota de seguridad:** solo se permiten limpiar estas carpetas dentro del proyecto:
+
+- `data/`  
+- `outputs/`  
+- `outputs/eda/`  
+
+Cualquier otra ruta será rechazada.
+
+- `--clean-data` → limpia `data/`  
+- `--clean-outputs` → limpia `outputs/`  
+- `--clean-eda` → limpia `outputs/eda/`  
+- `--remove-empty` → borra archivos de tamaño 0 en `data/` y `outputs/`
+
 
 ---
 
@@ -172,17 +185,12 @@ python src/analysis/eda.py
 ---
 
 ## 🛠️ Dependencias
+- Python 3.10+  
+- pandas  
+- matplotlib  
+- openpyxl  
 
-* Python 3.10+
-* pandas
-* matplotlib
-* xlsxwriter
 
-Instalación:
-
-```bash
-pip install -r requirements.txt
-```
 
 ---
 

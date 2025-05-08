@@ -2,14 +2,82 @@
 import os
 import glob
 import sys
+import shutil
 from galeria.procesar import InformeGaleria
 from memory.procesar import InformeMemory
 from topos.procesar import InformeTopos
 from caminos.procesar import InformeCaminos
 from aventuras.procesar import InformeAventuras
 from usuario.procesar import ResumenUsuario
+from analysis.eda import main as run_eda
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+# === Funciones de limpieza ===
+ALLOWED_CLEAN_DIRS = {
+    os.path.join(ROOT_DIR, "data"),
+    os.path.join(ROOT_DIR, "outputs"),
+    os.path.join(ROOT_DIR, "outputs", "eda")
+}
+
+def limpiar_directorio(path):
+    abs_path = os.path.abspath(path)
+    if abs_path not in ALLOWED_CLEAN_DIRS:
+        print(f"❌ Ruta no autorizada para limpiar: {abs_path}")
+        return
+    for entry in os.listdir(abs_path):
+        full = os.path.join(abs_path, entry)
+        if os.path.isdir(full):
+            shutil.rmtree(full)
+        else:
+            os.remove(full)
+    print(f"✅ Contenido borrado en: {abs_path}")
+
+
+def limpiar_data():
+    limpiar_directorio(os.path.join(ROOT_DIR, "data"))
+
+def limpiar_outputs():
+    # esto limpia todo dentro de outputs, pero nunca borra otra carpeta
+    limpiar_directorio(os.path.join(ROOT_DIR, "outputs"))
+
+def limpiar_eda():
+    limpiar_directorio(os.path.join(ROOT_DIR, "outputs", "eda"))
+
+
+def eliminar_archivos_vacios():
+    """Recorre 'data/' y 'outputs/' eliminando archivos de tamaño 0 bytes."""
+    for base in ("data", "outputs"):
+        base_dir = os.path.join(ROOT_DIR, base)
+        for dirpath, dirnames, filenames in os.walk(base_dir):
+            for fname in filenames:
+                fpath = os.path.join(dirpath, fname)
+                try:
+                    if os.path.getsize(fpath) == 0:
+                        os.remove(fpath)
+                        print(f"🗑️ Eliminado archivo vacío: {fpath}")
+                except OSError:
+                    pass
+
+# --- Rutina de limpieza por comandos ---
+if "--clean-data" in sys.argv:
+    limpiar_data()
+    sys.exit(0)
+if "--clean-outputs" in sys.argv:
+    limpiar_outputs()
+    sys.exit(0)
+if "--clean-eda" in sys.argv:
+    limpiar_eda()
+    sys.exit(0)
+if "--remove-empty" in sys.argv:
+    eliminar_archivos_vacios()
+    sys.exit(0)
+
+# == Ejecutar el eda ===
+if "--eda" in sys.argv:
+    run_eda()
+    sys.exit(0)
+
 
 # === Modo manual ===
 def seleccionar_archivo():

@@ -66,6 +66,9 @@ def generar_estadisticas(df):
 
     return desc, pivot
 
-if __name__ == "__main__":
+def main():
     df_all = cargar_resumenes()
     generar_estadisticas(df_all)
+
+if __name__ == "__main__":
+    main()

@@ -14,8 +14,10 @@ __pycache__/
 venv/
 
 # === Datos y salidas generadas ===
-outputs/
-data/
+/data/**
+!/data/.gitkeep
+/outputs/**
+!/outputs/.gitkeep
 *.csv
 *.zip
 

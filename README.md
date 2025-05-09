@@ -10,12 +10,6 @@ Este proyecto permite procesar automáticamente informes en formato `.txt` gener
 
 TFG/
 ├── data/
-│   ├── aventuras/
-│   ├── caminos/
-│   ├── galeria/
-│   ├── memory/
-│   ├── pacientes/
-│   └── topos/
 ├── outputs/
 │   ├── pacientes/{codigo}/{año}/{mes}/        # CSVs de resumen y tracking
 │   └── eda/                                   # EDA completo (Excel + gráfico)

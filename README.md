@@ -1,4 +1,3 @@
-```markdown
 # 🧠 Proyecto TFG - Procesamiento de Informes Cognitivos
 
 Este proyecto permite procesar automáticamente informes en formato `.txt` generados por distintas tareas de evaluación cognitiva: **Galería de tiro**, **Memory**, **Topos**, **Caminos**, **Aventuras**, y **Resumen de Usuario**. Extrae información clave y genera uno o dos archivos `.csv` por cada informe, además de un análisis exploratorio (EDA) empaquetado para su importación en Power BI.
@@ -7,7 +6,7 @@ Este proyecto permite procesar automáticamente informes en formato `.txt` gener
 
 ## 📁 Estructura del Proyecto
 
-
+````
 TFG/
 ├── data/
 ├── outputs/

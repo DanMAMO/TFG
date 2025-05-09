@@ -46,9 +46,21 @@ def generar_estadisticas(df):
     plt.figure(figsize=(6, 4))
     paciente = df["codigo"].iloc[0]
     sub = df[df["codigo"] == paciente].copy()
-    sub["fecha_dt"] = pd.to_datetime(sub["fecha_num"], format="%d.%m.%Y", errors="coerce")
+    # Detectar la columna que contiene la fecha formateada
+    if "fecha_num" in sub.columns:
+        fecha_col = "fecha_num"
+    elif "fecha_formateada" in sub.columns:
+        fecha_col = "fecha_formateada"
+    else:
+        raise KeyError("No se encontró columna de fecha en el DataFrame")
+    # Convertir a datetime (solo la parte dd.mm.YYYY)
+    sub["fecha_dt"] = pd.to_datetime(sub[fecha_col], format="%d.%m.%Y", errors="coerce")
     sub = sub.sort_values("fecha_dt")
-    plt.plot(sub["fecha_dt"], sub["puntuacion"], marker="o")
+    # Plotear
+    if not sub["fecha_dt"].dropna().empty:
+        plt.plot(sub["fecha_dt"], sub["puntuacion"], marker="o")
+    else:
+        print(f"⚠️ No hay fechas válidas para paciente {paciente}, gráfico vacío.")
     plt.title(f"Evolución de puntuación - Paciente {paciente}")
     plt.xlabel("Fecha")
     plt.ylabel("Puntuación")
@@ -57,8 +69,8 @@ def generar_estadisticas(df):
     plt.savefig(grafico_path)
     print(f"→ Gráfico generado en {grafico_path}")
 
-    # Guardar todo en un solo Excel con varias hojas
-    with pd.ExcelWriter(excel_path, engine="xlsxwriter") as writer:
+    # Guardar todo en un solo Excel con varias hojas usando openpyxl
+    with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
         df.to_excel(writer, sheet_name="DatosCrudos", index=False)
         desc.to_excel(writer, sheet_name="Descriptivos")
         pivot.to_excel(writer, sheet_name="MediaPuntuacion")

@@ -11,7 +11,7 @@ TFG/
 ├── data/
 ├── outputs/
 │   ├── pacientes/{codigo}/{año}/{mes}/        # CSVs de resumen y tracking
-│   └── eda/                                   # EDA completo (Excel + gráfico)
+│   └── eda/                                   # EDA completo
 ├── src/
 │   ├── aventuras/
 │   ├── base/

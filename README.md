@@ -6,7 +6,7 @@ Este proyecto permite procesar automáticamente informes en formato `.txt` gener
 ---
 
 ## 📁 Estructura del Proyecto
-```
+
 
 TFG/
 ├── data/
@@ -26,7 +26,6 @@ TFG/
 │   ├── analysis/                              # Script de EDA
 │   └── main.py
 └── README.md
-
 ````
 
 ---
@@ -193,6 +192,3 @@ python src/analysis/eda.py
 * Probar primero en modo manual antes de ejecutar en batch
 * No versionar archivos de salida (`outputs/`, `eda/`, CSVs, PNGs) ni datos de prueba (`data/`)
 * Documentar cada nueva tarea o modificación importante en este README
-
-```
-```

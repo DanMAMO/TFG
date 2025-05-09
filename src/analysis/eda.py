@@ -11,20 +11,31 @@ EDA_DIR        = os.path.join(PROJECT_ROOT, "outputs", "eda")
 os.makedirs(EDA_DIR, exist_ok=True)
 
 def cargar_resumenes():
-    """Carga todos los *_resumen.csv en un único DataFrame."""
-    pattern = os.path.join(PACIENTES_DIR, "*", "*", "*", "*_resumen.csv")
-    files = glob.glob(pattern)
+    """
+    Carga en un solo DataFrame:
+     - Todos los *_resumen.csv de juegos en cualquier subdirectorio
+     - Todos los resumen_usuario_*.csv bajo outputs/pacientes/{codigo}/
+    """
+    patterns = [
+        # Juego: busca recursivamente en cualquier nivel
+        os.path.join(PACIENTES_DIR, "**", "*_resumen.csv"),
+        # Usuario: solo en carpeta paciente (sin año/mes)
+        os.path.join(PACIENTES_DIR, "*", "resumen_usuario_*.csv"),
+    ]
     dfs = []
-    for fpath in files:
-        df = pd.read_csv(fpath, sep=";")
-        basename = os.path.basename(fpath)
-        parts = basename.split("-", 2)
-        if len(parts) >= 2:
-            juego = parts[1].replace("Tarea ", "")
-        else:
-            juego = "desconocido"
-        df["juego"] = juego
-        dfs.append(df)
+    for pat in patterns:
+        for fpath in glob.glob(pat, recursive=True):
+            df = pd.read_csv(fpath, sep=";")
+            basename = os.path.basename(fpath).lower()
+            # Determinar el nombre del juego / tipo de resumen
+            if basename.startswith("resumen_usuario"):
+                juego = "ResumenUsuario"
+            else:
+                # Extrae “Memory”, “Galería de tiro”, etc.
+                parts = os.path.basename(fpath).split("-", 2)
+                juego = parts[1].replace("Tarea ", "") if len(parts) >= 2 else "desconocido"
+            df["juego"] = juego
+            dfs.append(df)
     return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
 
 def generar_estadisticas(df):
@@ -33,50 +44,74 @@ def generar_estadisticas(df):
         print("⚠️ No se encontraron archivos de resumen para análisis.")
         return None, None
 
-    # Estadísticos y pivote
+    # 1) Descriptivos generales
     desc = df.describe(include="all")
-    pivot = df.pivot_table(index="codigo", columns="juego", values="puntuacion", aggfunc="mean")
 
-    # Timestamp para nombres de archivo
+    # 2) MediaPuntuacion desde ResumenUsuario
+    pattern_user = os.path.join(PACIENTES_DIR, "*", "resumen_usuario_*.csv")
+    user_dfs = []
+    for path in glob.glob(pattern_user, recursive=False):
+        u = pd.read_csv(path, sep=";")
+        user_dfs.append(u)
+
+    if user_dfs:
+        df_user = pd.concat(user_dfs, ignore_index=True)
+        df_mp = df_user[[
+            "codigo",
+            "puntuacionTopos",
+            "puntuacionMemory",
+            "puntuacionGaleriaTiro",
+            "puntuacionAventuras",
+            "puntuacionCaminos"
+        ]].rename(columns={
+            "puntuacionTareaTopos":       "Topos",
+            "puntuacionTareaMemory":      "Memory",
+            "puntuacionTareaGaleriaTiro": "Galería",
+            "puntuacionTareaAventuras":   "Aventuras",
+            "puntuacionTareaCaminos":     "Caminos",
+        })
+    else:
+        df_mp = pd.DataFrame(columns=[
+            "codigo", "Topos", "Memory", "Galería", "Aventuras", "Caminos"
+        ])
+
+    # 3) Generar gráfico de evolución para todos los juegos (usando df_user) de ejemplo (opcional)
+    # — Convertimos fecha —
+    df_user["fecha_dt"] = pd.to_datetime(
+        df_user.get("fecha_formateada", df_user.get("fecha_num", "")),
+        format="%d.%m.%Y", errors="coerce"
+    )
+    df_user = df_user.sort_values("fecha_dt")
+
+    # — Preparamos paths —
     timestamp = pd.Timestamp.now().strftime("%Y%m%d_%H%M%S")
-    excel_path = os.path.join(EDA_DIR, f"EDA_completo_{timestamp}.xlsx")
     grafico_path = os.path.join(EDA_DIR, f"evolucion_{timestamp}.png")
 
-    # Generar gráfico de evolución para el primer paciente
-    plt.figure(figsize=(6, 4))
-    paciente = df["codigo"].iloc[0]
-    sub = df[df["codigo"] == paciente].copy()
-    # Detectar la columna que contiene la fecha formateada
-    if "fecha_num" in sub.columns:
-        fecha_col = "fecha_num"
-    elif "fecha_formateada" in sub.columns:
-        fecha_col = "fecha_formateada"
-    else:
-        raise KeyError("No se encontró columna de fecha en el DataFrame")
-    # Convertir a datetime (solo la parte dd.mm.YYYY)
-    sub["fecha_dt"] = pd.to_datetime(sub[fecha_col], format="%d.%m.%Y", errors="coerce")
-    sub = sub.sort_values("fecha_dt")
-    # Plotear
-    if not sub["fecha_dt"].dropna().empty:
-        plt.plot(sub["fecha_dt"], sub["puntuacion"], marker="o")
-    else:
-        print(f"⚠️ No hay fechas válidas para paciente {paciente}, gráfico vacío.")
-    plt.title(f"Evolución de puntuación - Paciente {paciente}")
+    # — Dibujamos una línea por cada columna de df_mp —
+    plt.figure(figsize=(8, 4))
+    for col in ["Topos", "Memory", "Galería", "Aventuras", "Caminos"]:
+        if col in df_mp.columns:
+            plt.plot(df_user["fecha_dt"], df_user[col], marker="o", label=col)
+    plt.title(f"Evolución de puntuación - Paciente {df_mp['codigo'].iloc[0]}")
     plt.xlabel("Fecha")
     plt.ylabel("Puntuación")
+    plt.legend()
     plt.xticks(rotation=45)
     plt.tight_layout()
     plt.savefig(grafico_path)
     print(f"→ Gráfico generado en {grafico_path}")
 
-    # Guardar todo en un solo Excel con varias hojas usando openpyxl
-    with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
-        df.to_excel(writer, sheet_name="DatosCrudos", index=False)
+    # 4) Guardar todo en un solo Excel
+    excel_path = os.path.join(EDA_DIR, f"EDA_completo_{timestamp}.xlsx")
+    with pd.ExcelWriter(excel_path, engine="openpyxl") as writer:
+        df.to_excel(writer,   sheet_name="DatosCrudos",      index=False)
         desc.to_excel(writer, sheet_name="Descriptivos")
-        pivot.to_excel(writer, sheet_name="MediaPuntuacion")
+        df_mp.to_excel(writer, sheet_name="MediaPuntuacion",   index=False)
     print(f"✅ EDA completo exportado a {excel_path}")
 
-    return desc, pivot
+    # 5) Devuelve ambos DataFrames
+    return desc, df_mp
+
 
 def main():
     df_all = cargar_resumenes()

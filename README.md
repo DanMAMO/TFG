@@ -167,19 +167,17 @@ En `src/analysis/eda.py` hay un script que:
    * **Descriptivos**: estadísticas (`count`, `mean`, `std`, `min`, percentiles, `max`)
    * **MediaPuntuacion**: tabla con las puntuaciones de cada paciente en cada juego, extraídas del CSV resumen_usuario_*.csv (columnas Topos, Memory, Galería, Aventuras, Caminos).
    
-3. Genera un gráfico de evolución de puntuación para un paciente, guardado como `evolucion_{timestamp}.png`.
-4. Todos los resultados se almacenan en:
+3. Todos los resultados se almacenan en:
 
 ```
 outputs/eda/
-├── EDA_completo_{timestamp}.xlsx
-└── evolucion_{timestamp}.png
+└── EDA_completo_{timestamp}.xlsx
 ```
 
 ### Uso
 
 ```bash
-pip install pandas matplotlib 
+pip install pandas openpyxl
 python src/analysis/eda.py
 ```
 
@@ -187,8 +185,7 @@ python src/analysis/eda.py
 
 ## 🛠️ Dependencias
 - Python 3.10+  
-- pandas  
-- matplotlib  
+- pandas   
 - openpyxl  
 
 

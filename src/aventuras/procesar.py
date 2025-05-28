@@ -24,7 +24,7 @@ class InformeAventuras(InformeBase):
         resumen_data = {
             "codigo": resumen.get("codigo del paciente"),
             "fecha": resumen.get("fecha de registro"),
-            "fecha_formateada": formatear_fecha_ddmmYYYY(fecha),
+            "fecha_num": formatear_fecha_ddmmYYYY(fecha),
             "nivel": resumen.get("nivel"),
             "puntuacion": resumen.get("puntuacion"),
         }

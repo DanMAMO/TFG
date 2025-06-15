@@ -3,6 +3,9 @@ import os
 import glob
 import sys
 import shutil
+import time
+from collections import defaultdict
+
 from galeria.procesar import InformeGaleria
 from memory.procesar import InformeMemory
 from topos.procesar import InformeTopos
@@ -33,17 +36,14 @@ def limpiar_directorio(path):
             os.remove(full)
     print(f"✅ Contenido borrado en: {abs_path}")
 
-
 def limpiar_data():
     limpiar_directorio(os.path.join(ROOT_DIR, "data"))
 
 def limpiar_outputs():
-    # esto limpia todo dentro de outputs, pero nunca borra otra carpeta
     limpiar_directorio(os.path.join(ROOT_DIR, "outputs"))
 
 def limpiar_eda():
     limpiar_directorio(os.path.join(ROOT_DIR, "outputs", "eda"))
-
 
 def eliminar_archivos_vacios():
     """Recorre 'data/' y 'outputs/' eliminando archivos de tamaño 0 bytes."""
@@ -73,11 +73,10 @@ if "--remove-empty" in sys.argv:
     eliminar_archivos_vacios()
     sys.exit(0)
 
-# == Ejecutar el eda ===
+# --- Ejecutar EDA ---
 if "--eda" in sys.argv:
     run_eda()
     sys.exit(0)
-
 
 # === Modo manual ===
 def seleccionar_archivo():
@@ -143,22 +142,59 @@ if modo_manual:
     else:
         print("❌ No se seleccionó ningún archivo.")
 else:
-    print("🟡 Modo BATCH: procesando todos los archivos en data/*/")
+    print("🟡 Modo BATCH: procesando todos los archivos en data/**/*")
     pattern = os.path.join(ROOT_DIR, "data", "**", "*.txt")
     informes = glob.glob(pattern, recursive=True)
+
+    total_files = 0
+    skipped_empty = 0
+    errors = 0
+    success = 0
+
+    durations_all = []
+    durations_by_game = defaultdict(list)
+
     for path in informes:
+        total_files += 1
         nombre = os.path.basename(path)
+
         # Saltar archivos vacíos
         if os.path.getsize(path) == 0:
             print(f"\n⚠️ Informe vacío: {nombre} → saltando.")
+            skipped_empty += 1
             continue
 
+        t0 = time.perf_counter()
         try:
             informe = obtener_informe(path)
             resumen_path, tracking_path = informe.procesar()
+            dt = time.perf_counter() - t0
+
             print(f"\n✅ Procesado: {nombre}")
             print(f" - Resumen: {resumen_path}\n - Tracking: {tracking_path}")
+
+            success += 1
+            durations_all.append(dt)
+            juego = type(informe).__name__.replace("Informe", "")
+            durations_by_game[juego].append(dt)
+
         except Exception as err:
             print(f"\n⚠️ Error procesando {nombre}: {err}")
-            # Continuar con el siguiente informe
+            errors += 1
             continue
+
+    # Reportar métricas
+    print("\n=== MÉTRICAS DE VALIDACIÓN ===")
+    print(f"Total de archivos encontrados : {total_files}")
+    print(f"Procesados con éxito          : {success} ({100*success/total_files:.1f} %)")
+    print(f"Saltados (vacíos)             : {skipped_empty} ({100*skipped_empty/total_files:.1f} %)")
+    print(f"Errores de parsing            : {errors} ({100*errors/total_files:.1f} %)")
+
+    if durations_all:
+        tm = sum(durations_all) / len(durations_all)
+        print(f"Tiempo medio por archivo      : {tm:.3f} s")
+
+        print("\n--- Tiempo medio por juego ---")
+        for juego, lst in durations_by_game.items():
+            m = sum(lst) / len(lst)
+            print(f"  {juego:<10}: {m:.3f} s (n={len(lst)})")
